@@ -24,6 +24,7 @@ Open a terminal and run the following commands:
 ```bash
 git clone https://github.com/leunammejii/password_collector.git
 cd password_collector
+sudo pip install -r requirements -t .
 ```
 
 #### Password Collector  
