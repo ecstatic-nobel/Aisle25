@@ -17,7 +17,6 @@ Now you have a possible password and followed by possible usernames. Guilty of t
 
 #### Prerequisites  
 - Python 2.7.14  
-- Python PasswordMeter module  
 
 #### Setup  
 Open a terminal and run the following commands:  
