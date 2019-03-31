@@ -54,7 +54,7 @@ A sample of the output file can be found [here](https://github.com/ecstatic-nobe
 #### Destroy
 To remove the project completely,  run the following commands:  
 ```bash
-rm -rf password_collector
+rm -rf Password-Collector
 ```
 
 #### Things to Know  
