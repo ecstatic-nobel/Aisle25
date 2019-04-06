@@ -1,4 +1,4 @@
-# [Password Collector]  
+# [PwdLeak™]  
 ##### Use the username of failed logons seen in the Windows Security logs to determine the password of authorized users.  
 
 #### Description  
@@ -21,12 +21,12 @@ Now you have a possible password and followed by possible usernames. Guilty of t
 #### Setup  
 Open a terminal and run the following commands:  
 ```bash
-git clone https://github.com/ecstatic-nobel/Password-Collector.git
-cd Password-Collector
+git clone https://github.com/ecstatic-nobel/PwdLeak.git
+cd PwdLeak
 sudo pip install -r requirements -t .
 ```
 
-#### Password Collector  
+#### PwdLeak  
 Collect the logs for logon attempts, run the following command a Windows host (Win 7 or above):  
 ```powershell
 .\WinEventSecurityLogons.ps1 -OutputFile OUTPUTFILE
@@ -49,12 +49,12 @@ Possible Credentials Detected: Try logging onto fakecomputer3 as pwdc\fakeuser3 
 Possible Credentials Detected: Try logging onto fakecomputer2 as pwdc\fakeuser2 with the password Q7UopH*he,yL6,R!cc
 ```
 
-A sample of the output file can be found [here](https://github.com/ecstatic-nobel/Password-Collector/blob/master/sample_password_dump.csv). If you convert this to a custom Splunk command, you can use the output to setup alerts for when these events take place on your network. Administrators can then take action to reset the password (hoping that your administrator is not the insider) and remove the possibility of an inside threat selling it to the dark army (Get it? Dark army? Mr. Robot? Ok, forget it).  
+A sample of the output file can be found [here](https://github.com/ecstatic-nobel/PwdLeak/blob/master/sample_password_dump.csv). If you convert this to a custom Splunk command, you can use the output to setup alerts for when these events take place on your network. Administrators can then take action to reset the password (hoping that your administrator is not the insider) and remove the possibility of an inside threat selling it to the dark army (Get it? Dark army? Mr. Robot? Ok, forget it).  
 
 #### Destroy
 To remove the project completely,  run the following commands:  
 ```bash
-rm -rf Password-Collector
+rm -rf PwdLeak
 ```
 
 #### Things to Know  
