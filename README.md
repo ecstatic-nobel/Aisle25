@@ -1,5 +1,5 @@
 # [Aisle25™]  
-##### Use the username of failed logons seen in the Windows Security logs to determine the password of authorized users.  
+##### Use the username of failed logons seen in the Windows Security logs to alert on clear-text passwords of authorized users.  
 
 #### Description  
 Ever been distracted and ended up typing your password in the username/email field? Ever wonder where there logs go? Well, I'm pretty sure all failed (and successful) logons get logged somewhere. Using these logs, an insider doesn't need to worry about cracking hashes. They just need to wait for the right time (early Monday morning or when you're rushing back from lunch) to get your password for free because you'll blindly provide it to them. And not just at work either. This could happen when logging into any account (banks, shopping, school, etc.).  
@@ -68,6 +68,8 @@ The output of the base search should be a table with a minimum of the following 
 - Account_Name  
 - ComputerName  
 - Source_Network_Address  
+
+![pwdleak](https://raw.githubusercontent.com/ecstatic-nobel/Aisle25/master/static/assets/pwdleak.png)  
 
 The panel to the bottom left will show the raw logs formatted as a table with the required fields. The panel to the bottom right are the results containing possible usernames and passwords. The most efficient way to use this is to setup alerts for when these events take place on your network and notify the System Administrators so they can take action to reset the password.  
 
