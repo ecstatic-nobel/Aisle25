@@ -41,19 +41,6 @@ bash py_pkg_update.sh
 
 Restart Splunk.  
 
-#### Install via Splunk Web  
-In Splunk Web:  
-- Navigate to `Find More Apps`  
-- Search for `Aisle25`  
-- Identify the app and click `Install`  
-- Login with your Splunk.com credentials  
-- Click `Open the App`  
-- Open a terminal and run the following commands:  
-```bash
-cd $SPLUNK_HOME/etc/apps/Aisle25/bin
-bash py_pkg_update.sh
-```
-
 #### Usage  
 In Splunk:  
 - Switch to the PwdLeak dashboard in the Aisle25™ app.  
