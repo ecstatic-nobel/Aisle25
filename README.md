@@ -1,62 +1,84 @@
-# [PwdLeak™]  
+# [Aisle25™]  
 ##### Use the username of failed logons seen in the Windows Security logs to determine the password of authorized users.  
 
 #### Description  
-Ever been distracted and ended up typing your password in the username/email field? Ever wonder where there logs go? Well, I'm pretty sure all failed (and successful) logons get logged somewhere. Using these logs, an insider doesn't need to worry about cracking hashes. They just need to wait for the right time (early Monday morning or when you're rushing back from lunch) to get your password for free because you'll blindly provide it to them. And not just at work either. This could happen when logging onto any account (banks, shopping, school, etc.).  
+Ever been distracted and ended up typing your password in the username/email field? Ever wonder where there logs go? Well, I'm pretty sure all failed (and successful) logons get logged somewhere. Using these logs, an insider doesn't need to worry about cracking hashes. They just need to wait for the right time (early Monday morning or when you're rushing back from lunch) to get your password for free because you'll blindly provide it to them. And not just at work either. This could happen when logging into any account (banks, shopping, school, etc.).  
 
-What is the solution? Deny administrators the privilege to create usernames with high entropy and passwords with low entropy. Finally, harden the logon process. Don't allow it to accept/log failed logons attempts of usernames with high entropy. Problem solved!!!  
+What is the solution?  
 
-On a Windows host, these logon attempts are found in the Security logs (Event ID 4624: Successful Logon, Event ID 4625: Failed Logon). To determine possible passwords and usernames:  
-- Start with the first failed logon  
-- Calculate the entropy of the string in the username field  
+- If you are running a Windows 10 shop, use Protected Event Logging.  
+- Or, Deny administrators the privilege to create usernames with high entropy and passwords with low entropy.  
+- Or, Harden the logon process. Don't allow it to accept/log failed logons attempts of usernames with high entropy.  
+
+Problem solved?  
+
+Not quite. What happens if you are using a log aggregator like Splunk and those protected logs now have to become visible to detect threats? The best solution is to alert the System Administrator as soon as possible. No matter if it's internal, no one should know it except for the user.  
+
+To determine possible passwords and usernames:  
+- Start with the first failed logon (EventCode 4625)  
+- Calculate the entropy of the string in the User field  
 - If the entropy is high, add it to a list and mark it as a possible password  
-- Add all the successful logons that follow seen from the same source as the failed logon  
+- Add all of the successful logons that follow from the same source as potential usernames to use  
 - Continue this loop until the entire log file is read  
 
-Now you have a possible password and followed by possible usernames. Guilty of typing your password in the wrong field? Make sure you change it next time this happens. This project is a PoC.  
+Muahahahahaha!!!!!!
+
+Now you can use this evil theory for good and alert when these events take place in your environment.  
 
 #### Prerequisites  
 - Python 2.7.14  
+- Python Pip  
+- PasswordMeter  
 
-#### Setup  
+#### Manual Setup  
 Open a terminal and run the following commands:  
 ```bash
-git clone https://github.com/ecstatic-nobel/PwdLeak.git
-cd PwdLeak
-sudo pip install -r requirements -t .
+cd $SPLUNK_HOME/etc/apps
+git clone https://github.com/ecstatic-nobel/Aisle25.git
+cd Aisle25/bin
+bash py_pkg_update.sh
 ```
 
-#### PwdLeak  
-Collect the logs for logon attempts, run the following command a Windows host (Win 7 or above):  
-```powershell
-.\WinEventSecurityLogons.ps1 -OutputFile OUTPUTFILE
-```
+Restart Splunk.  
 
-The `OUTPUTFILE` is whatever name you choose. 
-
-Next, open `config.py` and add the full path of the exported Windows logs and the preferred path of where you would like to save the CSV-formatted password data. Running the Python script was only tested on a Linux computer but should work on Windows. If you are running this on Windows, make sure you escape the backslashes in the file path. 
-
-To run the script, run the following command:  
-```python
-python password_collector.py
-```
-
-Using the sample data, the following will be printed to the screen:
+#### Install via Splunk Web  
+In Splunk Web:  
+- Navigate to `Find More Apps`  
+- Search for `Aisle25`  
+- Identify the app and click `Install`  
+- Login with your Splunk.com credentials  
+- Click `Open the App`  
+- Open a terminal and run the following commands:  
 ```bash
-Possible Credentials Detected: Try logging onto fakecomputer1 as pwdc\fakeuser1 with the password ty&BSQ@&b7meYGx*
-Possible Credentials Detected: Try logging onto fakecomputer3 as pwdc\fakeuser2 with the password 3xG@LG29eZj!o8q@
-Possible Credentials Detected: Try logging onto fakecomputer3 as pwdc\fakeuser3 with the password 3xG@LG29eZj!o8q@
-Possible Credentials Detected: Try logging onto fakecomputer2 as pwdc\fakeuser2 with the password Q7UopH*he,yL6,R!cc
+cd $SPLUNK_HOME/etc/apps/Aisle25/bin
+bash py_pkg_update.sh
 ```
 
-A sample of the output file can be found [here](https://github.com/ecstatic-nobel/PwdLeak/blob/master/sample_password_dump.csv). If you convert this to a custom Splunk command, you can use the output to setup alerts for when these events take place on your network. Administrators can then take action to reset the password (hoping that your administrator is not the insider) and remove the possibility of an inside threat selling it to the dark army (Get it? Dark army? Mr. Robot? Ok, forget it).  
+#### Usage  
+In Splunk:  
+- Switch to the PwdLeak dashboard in the Aisle25™ app.  
+- Enter the base search in the `Base Search` text box (default: `sourcetype=wineventlog EventCode IN (4624, 4625)`).  
+- Choose the time constraint for the logs you want to analyze.  
+- Click `Submit`.  
+
+The output of the base search should be a table with a minimum of the following case-sensitive fields:  
+- _time  
+- EventCode  
+- Account_Domain  
+- Account_Name  
+- ComputerName  
+- Source_Network_Address  
+
+The panel to the bottom left will show the raw logs formatted as a table with the required fields. The panel to the bottom right are the results containing possible usernames and passwords. The most efficient way to use this is to setup alerts for when these events take place on your network and notify the System Administrators so they can take action to reset the password.  
 
 #### Destroy
-To remove the project completely,  run the following commands:  
+To remove the project completely, run the following commands:  
 ```bash
-rm -rf PwdLeak
+cd $SPLUNK_HOME/etc/apps
+rm -rf Aisle25
 ```
+Finally, restart Splunk.  
 
 #### Things to Know  
-- The possible password does not garauntee that the user typed it in correctly but it does give one a head start to figuring it out.  
+- Be responsible!!!   
 - Password with a comma will not be detected  
