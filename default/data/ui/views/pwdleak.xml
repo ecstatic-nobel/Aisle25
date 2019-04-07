@@ -1,0 +1,51 @@
+<form>
+  <label>PwdLeak</label>
+  <description>Use the usernames of failed logins to determine the password of authorized users.</description>
+  <search id="Base_Search">
+    <query>$base_search$</query>
+    <earliest>$time_constraint.earliest$</earliest>
+    <latest>$time_constraint.latest$</latest>
+  </search>
+  <fieldset submitButton="true">
+    <input type="text" token="base_search">
+      <label>Base Search</label>
+      <default>sourcetype=wineventlog EventCode IN (4624, 2525)</default>
+      <initialValue>sourcetype=wineventlog EventCode IN (4624, 2525)</initialValue>
+    </input>
+    <input type="time" token="time_constraint">
+      <label>Time Constraint</label>
+      <default>
+        <earliest>-4h@m</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>$base_search$</title>
+      <table>
+        <search base="Base_Search">
+          <query>| table _time, EventCode, Account_Domain, Account_Name, ComputerName, Source_Network_Address
+| sort _time</query>
+        </search>
+        <option name="count">25</option>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">preview</option>
+      </table>
+    </panel>
+    <panel>
+      <title>Results</title>
+      <table>
+        <search base="Base_Search">
+          <query>| table _time, EventCode, Account_Domain, Account_Name, ComputerName, Source_Network_Address
+| sort _time
+| aisle25
+| table Account_Domain, "Possible_Username", "Possible_Password", ComputerName, Source_Network_Address, "Password_Possibility"</query>
+        </search>
+        <option name="count">10</option>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">preview</option>
+      </table>
+    </panel>
+  </row>
+</form>

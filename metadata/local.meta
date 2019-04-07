@@ -1,0 +1,10 @@
+[nav/default]
+version = 7.1.3
+modtime = 1554581358.407871000
+
+[views/pwdleak]
+access = read : [ * ], write : [ admin, power ]
+export = none
+owner = admin
+version = 7.1.3
+modtime = 1554581407.198769000

@@ -1,0 +1,7 @@
+<nav search_view="search" >
+  <view name="pwdleak" default='true' />
+  <collection label="Misc" >
+    <view name="search" />
+    <view name="dashboards" />
+  </collection>
+</nav>
