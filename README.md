@@ -37,7 +37,8 @@ In Splunk Web:
 - Search for `Aisle25`  
 - Identify the app and click `Install`  
 - Login with your Splunk.com credentials  
-- Click `Open the App`  
+- Click `Restart Now`  
+- Click `Open App`  
 - Open a terminal and run the following commands:  
 ```bash
 cd <SPLUNK_HOME>/etc/apps/Aisle25/bin
