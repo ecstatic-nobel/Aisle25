@@ -1,7 +1,7 @@
 # [Aisle25™]  
 ##### Use the username of failed logons seen in the Windows Security logs to alert on clear-text passwords of authorized users.  
 
-#### Description  
+### Description  
 Ever been distracted and ended up typing your password in the username/email field? Ever wonder where there logs go? Well, I'm pretty sure all failed (and successful) logons get logged somewhere. Using these logs, an insider doesn't need to worry about cracking hashes. They just need to wait for the right time (early Monday morning or when you're rushing back from lunch) to get your password for free because you'll blindly provide it to them. And not just at work either. This could happen when logging into any account (banks, shopping, school, etc.).  
 
 What is the solution?  
@@ -25,13 +25,13 @@ Muahahahahaha!!!!!!
 
 Now you can use this evil theory for good and alert when these events take place in your environment.  
 
-#### Prerequisites  
+### Prerequisites  
 - Git  
 - Python 2.7.14  
 - Python Pip  
 - PasswordMeter  
 
-#### Install via Splunk Web  
+### Install via Splunk Web  
 In Splunk Web:  
 - Navigate to `Find More Apps`  
 - Search for `Aisle25`  
@@ -44,7 +44,7 @@ cd <SPLUNK_HOME>/etc/apps/Aisle25/bin
 bash py_pkg_update.sh
 ```
 
-#### Manual Setup  
+### Manual Setup  
 Open a terminal and run the following commands:  
 ```bash
 cd <SPLUNK_HOME>/etc/apps
@@ -55,7 +55,7 @@ bash py_pkg_update.sh
 
 Restart Splunk.  
 
-#### Usage  
+### Usage  
 In Splunk:  
 - Switch to the PwdLeak dashboard in the Aisle25™ app.  
 - Enter the base search in the `Base Search` text box (default: `sourcetype=wineventlog EventCode IN (4624, 4625)`).  
@@ -74,7 +74,7 @@ The output of the base search should be a table with a minimum of the following 
 
 The panel to the bottom left will show the raw logs formatted as a table with the required fields. The panel to the bottom right are the results containing possible usernames and passwords. The most efficient way to use this is to setup alerts for when these events take place on your network and notify the System Administrators so they can take action to reset the password.  
 
-#### Destroy
+### Destroy
 To remove the project completely, run the following commands:  
 ```bash
 cd $SPLUNK_HOME/etc/apps
@@ -82,6 +82,6 @@ rm -rf Aisle25
 ```
 Finally, restart Splunk.  
 
-#### Things to Know  
+### Things to Know  
 - Be responsible!!!   
 - Password with a comma will not be detected  
