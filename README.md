@@ -26,14 +26,28 @@ Muahahahahaha!!!!!!
 Now you can use this evil theory for good and alert when these events take place in your environment.  
 
 #### Prerequisites  
+- Git  
 - Python 2.7.14  
 - Python Pip  
 - PasswordMeter  
 
+#### Install via Splunk Web  
+In Splunk Web:  
+- Navigate to `Find More Apps`  
+- Search for `Aisle25`  
+- Identify the app and click `Install`  
+- Login with your Splunk.com credentials  
+- Click `Open the App`  
+- Open a terminal and run the following commands:  
+```bash
+cd <SPLUNK_HOME>/etc/apps/Aisle25/bin
+bash py_pkg_update.sh
+```
+
 #### Manual Setup  
 Open a terminal and run the following commands:  
 ```bash
-cd $SPLUNK_HOME/etc/apps
+cd <SPLUNK_HOME>/etc/apps
 git clone https://github.com/ecstatic-nobel/Aisle25.git
 cd Aisle25/bin
 bash py_pkg_update.sh
